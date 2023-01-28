@@ -8,7 +8,7 @@ export async function getMovies(req: Request, res: Response) {
 
         const movies = await getMoviesDB()
 
-        res.status(200).send(movies.rows)
+        res.status(200).send(movies)
 
     } catch (error) {
 
@@ -40,7 +40,7 @@ export async function deleteMovieById( req:Request, res:Response){
 
     try {
 
-        await deleteMovieByIdDB(id)
+        await deleteMovieByIdDB(Number(id))
 
         res.sendStatus(200)
         
@@ -60,10 +60,10 @@ export async function updateMovie(req:Request, res:Response){
         
         if(body){
 
-            await updateMovieWithResumeDB(id, body.resume)
+            await updateMovieWithResumeDB(Number(id), body.resume)
         }else{
 
-            await updateMovieDB(id)
+            await updateMovieDB(Number(id))
         }
 
         res.sendStatus(200)
@@ -81,7 +81,7 @@ export async function updateUnsawMovie(req:Request, res:Response){
 
     try {
 
-        await updateUnsawMovieDB(id)
+        await updateUnsawMovieDB(Number(id))
 
         res.sendStatus(200)
         

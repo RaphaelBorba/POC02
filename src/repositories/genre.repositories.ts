@@ -1,5 +1,4 @@
 import prisma from "../data/database";
-import { db } from "../data/db";
 
 
 export function createGenreDB(name: string) {

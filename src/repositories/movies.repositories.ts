@@ -1,46 +1,67 @@
 import { Movies } from "../protocols";
 import { db } from "../data/db";
+import prisma from "../data/database";
 
 
 export function getMoviesDB() {
-    const promise = db.query(`SELECT * FROM movies;`)
-    return promise
+    return prisma.movies.findMany();
 }
 
 export function checkMovieByNameDB(name: string) {
-
-    return db.query(`SELECT * FROM movies WHERE title = ($1)`, [name.toLowerCase()])
+    return prisma.movies.findFirst({where:{title:name.toLowerCase()}})
 }
 
 export function createMovieDB(body: Movies) {
 
-    return db.query(`INSERT INTO movies(title, genre, streamer, status) VALUES ($1,$2,$3,$4) `,
-        [body.title.toLowerCase(), body.genre, body.streamer, false])
+    return prisma.movies.create({
+        data:{
+            title:body.title,
+            genre:body.genre,
+            status:false,
+            streamer:body.streamer
+        }
+    })
 }
 
-export function checkMovieByIdDB(id: string) {
-
-    return db.query(`SELECT * FROM movies WHERE id = ($1)`, [id])
+export function checkMovieByIdDB(id: number) {
+    return prisma.movies.findFirst({where:{id:id}})
 }
 
-export function deleteMovieByIdDB(id: string) {
-
-    return db.query(`DELETE FROM movies WHERE id = ($1)`, [id])
+export function deleteMovieByIdDB(id: number) {
+    return prisma.movies.delete({where:{id:id}})
 }
 
-export function updateMovieWithResumeDB(id: string, resume: string) {
+export function updateMovieWithResumeDB(id: number, resume: string) {
 
-    return db.query(`UPDATE movies SET resume = $1, status = $2 WHERE id = $3`, [resume, true, id])
+    return prisma.movies.update({
+        where:{id},
+        data:{
+            resume,
+            status:true
+        }
+    })
 }
 
-export function updateMovieDB(id: string) {
+export function updateMovieDB(id: number) {
 
-    return db.query(`UPDATE movies SET status = $1 WHERE id = $2`, [true, id])
+    return prisma.movies.update({
+        where:{id},
+        data:{
+            status:true
+        }
+
+    })
 }
 
-export function updateUnsawMovieDB(id: string) {
+export function updateUnsawMovieDB(id: number) {
 
-    return db.query(`UPDATE movies SET status = $1, resume = $2 WHERE id = $3`, [false, null, id])
+    return prisma.movies.update({
+        where:{id},
+        data:{
+            resume:null,
+            status:false
+        }
+    })
 }
 
 export function getSeenMoviesDB() {

@@ -20,7 +20,7 @@ export async function validateMovieBody(req: Request, res: Response, next: NextF
 
     const checkStreamer = await checkStreamerByIdDB(body.streamer)
 
-    if (checkTitle.rows[0] || !checkGenre || !checkStreamer.rows[0]) {
+    if (checkTitle || !checkGenre || !checkStreamer.rows[0]) {
         return res.status(409).send('Gênero ou streamer não existem, ou titulo já usado')
     }
 
@@ -37,9 +37,9 @@ export async function validateMovieById(req: Request, res: Response, next: NextF
         if(error) { return  res.sendStatus(400)}
     }
 
-    const checkId = await checkMovieByIdDB(id)
+    const checkId = await checkMovieByIdDB(Number(id))
 
-    if (!checkId.rows[0]) { return res.sendStatus(404) }
+    if (!checkId) { return res.sendStatus(404) }
 
     next()
 }
