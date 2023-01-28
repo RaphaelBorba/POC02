@@ -1,17 +1,35 @@
 # Project Title
 
-This project is use to show witch movies you have seen and resumes that you can make about it.
+This project is use to show which movies have you seen and create resumes about the movies.
 
 ## Getting Started
 
-You must install all dependencies with:
+- You must install all dependencies with:
 ```
     npm install
 ```
 
-And run the code with:
+- Create your database doesn't matter the name
+
+
+- Create your .env:
 ```
-    npm run start
+    DATABASE_URL="postgresql://postgres:password@host:5432/database?schema=public"
+```
+
+- Run prisma migrate:
+```
+    npx prisma migrate dev
+```
+
+- Populate your database:
+```
+    npx prisma db seed
+```
+
+- And run the code with:
+```
+    npm start
 ```
 
 
