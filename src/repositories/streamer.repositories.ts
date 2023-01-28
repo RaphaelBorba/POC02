@@ -4,26 +4,35 @@ import { db } from "../data/db";
 
 export function createStreamerDB(name: string) {
 
-    return db.query(`INSERT INTO streamer(name) VALUES ($1)`, [name.toLowerCase()])
-    return prisma
+    return prisma.streamer.create({
+        data:{name}
+    })
 }
 
 export function getStreamersDB(){
 
-    return db.query(`SELECT * FROM streamer`)
+    return prisma.streamer.findMany();
 }
 
-export function deleteStreamerByIdDB(id: string){
+export function deleteStreamerByIdDB(id: number){
 
-    return db.query(`DELETE FROM streamer WHERE id = ($1)`, [id])
+    return prisma.streamer.delete({
+        where:{id}
+    })
 }
 
-export function checkStreamerByIdDB(id:string){
+export function checkStreamerByIdDB(id:number){
 
-    return db.query(`SELECT * FROM streamer WHERE id = ($1)`, [id])
+    return prisma.streamer.findFirst({
+        where:{
+            id
+        }
+    })
 }
 
 export function checkStreamerBynameDB(name:string){
 
-    return db.query(`SELECT * FROM streamer WHERE name = ($1)`, [name.toLowerCase()])
+    return prisma.streamer.findFirst({
+        where:{name}
+    })
 }

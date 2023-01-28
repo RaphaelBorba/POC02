@@ -27,7 +27,7 @@ export async function getStreamers(req:Request, res:Response){
 
         const genres = await getStreamersDB()
 
-        res.status(200).send(genres.rows)
+        res.status(200).send(genres)
         
     } catch (error) {
         
@@ -42,7 +42,7 @@ export async function deleteStreamerById(req:Request, res:Response){
 
     try {
 
-        await deleteStreamerByIdDB(id)
+        await deleteStreamerByIdDB(Number(id))
 
         res.sendStatus(200)
         

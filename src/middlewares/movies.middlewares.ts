@@ -20,7 +20,7 @@ export async function validateMovieBody(req: Request, res: Response, next: NextF
 
     const checkStreamer = await checkStreamerByIdDB(body.streamer)
 
-    if (checkTitle || !checkGenre || !checkStreamer.rows[0]) {
+    if (checkTitle || !checkGenre || !checkStreamer) {
         return res.status(409).send('Gênero ou streamer não existem, ou titulo já usado')
     }
 

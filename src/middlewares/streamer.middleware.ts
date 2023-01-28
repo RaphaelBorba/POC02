@@ -13,7 +13,7 @@ export async function validateStreamerByName(req:Request, res:Response, next:Nex
 
     const check = await checkStreamerBynameDB(body.name)
 
-    if(check.rows[0]) {return res.sendStatus(409)}
+    if(check) {return res.sendStatus(409)}
 
     next()
 }
@@ -22,11 +22,11 @@ export async function validateStreamerById(req:Request, res:Response, next:NextF
 
     const {id} = req.params
 
-    const check = await checkStreamerByIdDB(id)
+    const check = await checkStreamerByIdDB(Number(id))
     console.log(check);
     
 
-    if(!check.rows[0]){ return res.sendStatus(404)}
+    if(!check){ return res.sendStatus(404)}
 
     next()
 }
